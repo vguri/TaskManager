@@ -21,9 +21,9 @@ const FALLBACKS: Quote[] = [
 const ROTATE_MS = 8000;
 
 export function useQuote() {
-  const [quotes, setQuotes] = useState<Quote[]>([]);
+  const [quotes, setQuotes] = useState<Quote[]>(shuffle(FALLBACKS));
   const [index, setIndex] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [timerKey, setTimerKey] = useState(0);
 
   useEffect(() => {
@@ -36,10 +36,12 @@ export function useQuote() {
           .filter(item => item.q && item.a && !item.q.startsWith('Too many'))
           .slice(0, 25)
           .map(item => ({ q: item.q, a: item.a }));
-        setQuotes(shuffle(parsed.length > 0 ? parsed : FALLBACKS));
+        if (parsed.length > 0) {
+          setQuotes(shuffle(parsed));
+          setIndex(0);
+        }
       })
-      .catch(() => setQuotes(shuffle(FALLBACKS)))
-      .finally(() => setLoading(false));
+      .catch(() => {});
 
     return () => controller.abort();
   }, []);
