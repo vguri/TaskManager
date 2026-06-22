@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Pressable } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../constants/colors';
 import { RootStackParamList } from '../types';
@@ -23,6 +23,22 @@ const sharedHeaderOptions = {
   contentStyle: { backgroundColor: Colors.background },
 };
 
+function BackButton({ onPress }: { onPress: () => void }) {
+  return (
+    <Pressable onPress={onPress} style={styles.headerBtn}>
+      <Ionicons name="arrow-back" size={22} color={Colors.primary} />
+    </Pressable>
+  );
+}
+
+function CloseButton({ onPress }: { onPress: () => void }) {
+  return (
+    <Pressable onPress={onPress} style={styles.headerBtn}>
+      <Ionicons name="close" size={22} color={Colors.primary} />
+    </Pressable>
+  );
+}
+
 export function RootNavigator() {
   return (
     <NavigationContainer>
@@ -37,11 +53,7 @@ export function RootNavigator() {
           component={TaskDetailScreen}
           options={({ navigation }) => ({
             title: 'Task Detail',
-            headerLeft: () => (
-              <Pressable onPress={() => navigation.goBack()} hitSlop={8}>
-                <Ionicons name="arrow-back" size={24} color={Colors.primary} />
-              </Pressable>
-            ),
+            headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
           })}
         />
         <Stack.Screen
@@ -50,11 +62,7 @@ export function RootNavigator() {
           options={({ navigation }) => ({
             title: 'New Task',
             presentation: 'modal',
-            headerLeft: () => (
-              <Pressable onPress={() => navigation.goBack()} hitSlop={8}>
-                <Ionicons name="close" size={24} color={Colors.primary} />
-              </Pressable>
-            ),
+            headerLeft: () => <CloseButton onPress={() => navigation.goBack()} />,
           })}
         />
         <Stack.Screen
@@ -62,14 +70,26 @@ export function RootNavigator() {
           component={RecentlyDeletedScreen}
           options={({ navigation }) => ({
             title: 'Recently Deleted',
-            headerLeft: () => (
-              <Pressable onPress={() => navigation.goBack()} hitSlop={8}>
-                <Ionicons name="arrow-back" size={24} color={Colors.primary} />
-              </Pressable>
-            ),
+            headerLeft: () => <BackButton onPress={() => navigation.goBack()} />,
           })}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  headerBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: Colors.surface,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+});
