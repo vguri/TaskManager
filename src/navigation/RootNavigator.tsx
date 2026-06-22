@@ -7,6 +7,7 @@ import { RootStackParamList } from '../types';
 import { HomeScreen } from '../screens/HomeScreen';
 import { TaskDetailScreen } from '../screens/TaskDetailScreen';
 import { AddTaskScreen } from '../screens/AddTaskScreen';
+import { RecentlyDeletedScreen } from '../screens/RecentlyDeletedScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -52,6 +53,18 @@ export function RootNavigator() {
             headerLeft: () => (
               <Pressable onPress={() => navigation.goBack()} hitSlop={8}>
                 <Ionicons name="close" size={24} color={Colors.primary} />
+              </Pressable>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="RecentlyDeleted"
+          component={RecentlyDeletedScreen}
+          options={({ navigation }) => ({
+            title: 'Recently Deleted',
+            headerLeft: () => (
+              <Pressable onPress={() => navigation.goBack()} hitSlop={8}>
+                <Ionicons name="arrow-back" size={24} color={Colors.primary} />
               </Pressable>
             ),
           })}

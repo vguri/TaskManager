@@ -104,6 +104,13 @@ export function HomeScreen({ navigation }: Props) {
       >
         <Ionicons name="add" size={30} color="#FFFFFF" />
       </Pressable>
+
+      <Pressable
+        style={({ pressed }) => [styles.trashFab, pressed && styles.fabPressed]}
+        onPress={() => navigation.navigate('RecentlyDeleted')}
+      >
+        <Ionicons name="trash-outline" size={22} color={Colors.textSecondary} />
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -195,5 +202,21 @@ const styles = StyleSheet.create({
   fabPressed: {
     opacity: 0.85,
     transform: [{ scale: 0.95 }],
+  },
+  trashFab: {
+    position: 'absolute',
+    bottom: 36,
+    left: 24,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: Colors.surface,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 10,
+    elevation: 6,
   },
 });
